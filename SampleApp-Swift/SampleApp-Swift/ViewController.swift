@@ -8,7 +8,6 @@
 import UIKit
 
 class ViewController: UIViewController, CardIOPaymentViewControllerDelegate {
-
   @IBOutlet weak var resultLabel: UILabel!
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -21,22 +20,28 @@ class ViewController: UIViewController, CardIOPaymentViewControllerDelegate {
     // Dispose of any resources that can be recreated.
   }
   
-  @IBAction func scanCard(sender: AnyObject) {
-    let cardIOVC = CardIOPaymentViewController(paymentDelegate: self)
-    cardIOVC.modalPresentationStyle = .FormSheet
-    presentViewController(cardIOVC, animated: true, completion: nil)
+  @IBAction func scanCard(_ sender: Any) {
+    let cardIOVC = CardIOPaymentViewController(paymentDelegate: self)!
+    cardIOVC.modalPresentationStyle = .formSheet
+    present(cardIOVC, animated: true, completion: nil)
   }
   
-  func userDidCancelPaymentViewController(paymentViewController: CardIOPaymentViewController!) {
+//    userDidCancelPaymentViewController:(CardIOPaymentViewController *)paymentViewController;
+//    userDidProvideCreditCardInfo:(CardIOCreditCardInfo *)cardInfo inPaymentViewController:(CardIOPaymentViewController *)paymentViewController;
+//    @objc func userDidCancelPaymentViewController(paymentViewController) {
+//    userDidCancel(paymentViewController);
+//    }
+    
+  func userDidCancel(_ paymentViewController: CardIOPaymentViewController!) {
     resultLabel.text = "user canceled"
-    paymentViewController?.dismissViewControllerAnimated(true, completion: nil)
+    paymentViewController?.dismiss(animated: true, completion: nil)
   }
   
-  func userDidProvideCreditCardInfo(cardInfo: CardIOCreditCardInfo!, inPaymentViewController paymentViewController: CardIOPaymentViewController!) {
+  func userDidProvide(_ cardInfo: CardIOCreditCardInfo!, in paymentViewController: CardIOPaymentViewController!) {
     if let info = cardInfo {
       let str = NSString(format: "Received card info.\n Number: %@\n expiry: %02lu/%lu\n cvv: %@.", info.redactedCardNumber, info.expiryMonth, info.expiryYear, info.cvv)
       resultLabel.text = str as String
     }
-    paymentViewController?.dismissViewControllerAnimated(true, completion: nil)
+    paymentViewController?.dismiss(animated: true, completion: nil)
   }  
 }
