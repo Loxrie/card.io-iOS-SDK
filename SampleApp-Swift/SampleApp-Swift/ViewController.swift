@@ -26,12 +26,6 @@ class ViewController: UIViewController, CardIOPaymentViewControllerDelegate {
     present(cardIOVC, animated: true, completion: nil)
   }
   
-//    userDidCancelPaymentViewController:(CardIOPaymentViewController *)paymentViewController;
-//    userDidProvideCreditCardInfo:(CardIOCreditCardInfo *)cardInfo inPaymentViewController:(CardIOPaymentViewController *)paymentViewController;
-//    @objc func userDidCancelPaymentViewController(paymentViewController) {
-//    userDidCancel(paymentViewController);
-//    }
-    
   func userDidCancel(_ paymentViewController: CardIOPaymentViewController!) {
     resultLabel.text = "user canceled"
     paymentViewController?.dismiss(animated: true, completion: nil)
